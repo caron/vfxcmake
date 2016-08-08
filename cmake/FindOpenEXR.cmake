@@ -6,6 +6,7 @@
 #
 # Output variables:
 #  OPENEXR_FOUND
+#  OPENEXR_VERSION
 #  OPENEXR_INCLUDE_DIRS
 #  OPENEXR_<lib>_LIBRARY
 #  OPENEXR_LIBRARIES
@@ -73,6 +74,16 @@ endforeach()
 # Reset lib search suffix
 if(OpenEXR_USE_STATIC_LIBS)
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${_openexr_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES})
+endif()
+
+get_filename_component(OPENEXR_LIBRARY_DIRS ${OPENEXR_IlmImf_LIBRARY} DIRECTORY)
+
+if(OPENEXR_INCLUDE_DIRS AND EXISTS "${OPENEXR_INCLUDE_DIRS}/OpenEXR/OpenEXRConfig.h")
+  file(STRINGS
+       ${OPENEXR_INCLUDE_DIRS}/OpenEXR/OpenEXRConfig.h
+       TMP
+       REGEX "#define OPENEXR_VERSION_STRING.*$")
+  string(REGEX MATCHALL "[0-9.]+" OPENEXR_VERSION ${TMP})
 endif()
 
 # Finalize package search
