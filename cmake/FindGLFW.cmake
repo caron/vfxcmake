@@ -96,6 +96,17 @@ if (WIN32)
                 "The GLFW library"
         )
     else()
+
+        if(MSVC14)
+          set(GLFW_LIB_PATH_SUFFIX "lib-vc2015")
+        elseif(MSVC12)
+          set(GLFW_LIB_PATH_SUFFIX "lib-vc2013")
+        elseif(MSVC11)
+          set(GLFW_LIB_PATH_SUFFIX "lib-vc2012")
+        elseif(MSVC10)
+          set(GLFW_LIB_PATH_SUFFIX "lib-msvc110")
+        endif()
+
         find_library( GLFW_glfw_LIBRARY
             NAMES 
                 glfw32 
@@ -105,16 +116,16 @@ if (WIN32)
             HINTS
                 "${GLFW_LOCATION}/lib"
                 "${GLFW_LOCATION}/lib/x64"
-                "${GLFW_LOCATION}/lib-msvc110"
-                "${GLFW_LOCATION}/lib-vc2012"
-                "{GLFW_LOCATION}/lib-vc2013"
-                "{GLFW_LOCATION}/lib-vc2015"
+                "${GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "${GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "${GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "${GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
                 "$ENV{GLFW_LOCATION}/lib"
                 "$ENV{GLFW_LOCATION}/lib/x64"
-                "$ENV{GLFW_LOCATION}/lib-msvc110"
-                "$ENV{GLFW_LOCATION}/lib-vc2012"
-                "$ENV{GLFW_LOCATION}/lib-vc2013"
-                "$ENV{GLFW_LOCATION}/lib-vc2015"
+                "$ENV{GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "$ENV{GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "$ENV{GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
+                "$ENV{GLFW_LOCATION}/${GLFW_LIB_PATH_SUFFIX}"
             PATHS
                 "$ENV{PROGRAMFILES}/GLFW/lib"
                 "${OPENGL_LIBRARY_DIR}"
